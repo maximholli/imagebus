@@ -1,6 +1,7 @@
 from enum import Enum
 import datetime
 import base64
+import re
 
 
 class ImagebusTopic(Enum):
@@ -30,7 +31,8 @@ class FrameDetails:
             % (name, frameRate, url, topic)
         )
         if name is None:
-            self.name = url
+            ip_condense = re.compile(r'\d+[.]\d+[.]\d+[.]\d+[:]\d+')
+            self.name = ip_condense.findall(url)[0]
         else:
             self.name = name
 
